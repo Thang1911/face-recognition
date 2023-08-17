@@ -5,13 +5,10 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const page = () => {
-  const canvasRef1 = useRef<HTMLCanvasElement>(null);
+
   const canvasRef2 = useRef<HTMLCanvasElement>(null);
-  const inputRef1 = useRef<HTMLInputElement>(null);
   const inputRef2 = useRef<HTMLInputElement>(null);
-  const [imageURL1, setImageURL1] = useState<string | null>(null);
   const [imageURL2, setImageURL2] = useState<string | null>(null);
-  const [face1, setFace1] = useState<boolean>(false);
   const [face2, setFace2] = useState<boolean>(false);
 
   const router = useRouter();
@@ -23,23 +20,6 @@ const page = () => {
   useEffect(() => {
     init();
   }, []);
-
-  const handleFileChange1 = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event.target.files?.[0];
-
-    if (file) {
-      const hasFace = await handleImage(file, canvasRef1);
-      setImageURL1(URL.createObjectURL(file));
-
-      if (hasFace) {
-        setFace1(true);
-      } else {
-        setFace1(false);
-      }
-    }
-  };
 
   const handleFileChange2 = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -58,16 +38,12 @@ const page = () => {
     }
   };
 
-  const handleClick1 = () => {
-    inputRef1.current?.click();
-  };
-
   const handleClick2 = () => {
     inputRef2.current?.click();
   };
 
   const checkFace = () => {
-    if (face1 && face2) {
+    if (face2) {
       alert("Hình ảnh đã chọn có khuôn mặt!");
       router.push("/camera");
     } else {
@@ -81,33 +57,6 @@ const page = () => {
         <h1>Face Recognition</h1>
       </div>
       <div className="flex flex-wrap justify-around w-full h-3/4">
-        <div className="mb-4">
-          <input
-            type="file"
-            onChange={handleFileChange1}
-            className="hidden"
-            ref={inputRef1}
-          />
-          <button
-            onClick={handleClick1}
-            className="p-bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded "
-          >
-            Choose file
-          </button>
-
-          <div
-            style={{ position: "relative", width: "300px", height: "300px" }}
-          >
-            <Image
-              src={imageURL1 || "/default.jpeg"}
-              alt="Hình ảnh đã chọn"
-              layout="fill"
-              objectFit="contain"
-              style={{ zIndex: 0 }}
-            />
-            <canvas ref={canvasRef1} className="canvasImage" />
-          </div>
-        </div>
         <div className="mb-4">
           <input
             type="file"
