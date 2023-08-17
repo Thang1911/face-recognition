@@ -16,7 +16,14 @@
   }
 }
 
+html {
+  font-family: 'Pacifico',
+    cursive !important;
+}
+
 body {
+  font-family: 'Pacifico',
+      cursive !important;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(to bottom,
       transparent,
@@ -43,4 +50,25 @@ video {
   height: 100%;
   /* objectFit: contain; */
   z-index: 1;
+}
+
+.from-custom-pink {
+  --tw-gradient-from: #FF9F9F var(--tw-gradient-from-position);
+  --tw-gradient-from-position: ;
+  --tw-gradient-to: rgb(255 159 159 / 0) var(--tw-gradient-from-position);
+  --tw-gradient-to-position: ;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-custom-red {
+  --tw-gradient-to: #FF2C61 var(--tw-gradient-to-position);
+  --tw-gradient-to-position:
+}
+
+.sidebar {
+  list-style: none;
+  padding-left: 20px;
+  font-size: 40px;
+  gap: 10px;
+  cursor: pointer;
 }

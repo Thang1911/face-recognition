@@ -68,9 +68,28 @@ export const handleImage = async (
 
   for (const detection of resizeDetection) {
     const box = detection.detection.box;
-    const drawBox = new faceapi.draw.DrawBox(box, { label: 'face' });
+    const drawBox = new faceapi.draw.DrawBox(box, { label: "face" });
     drawBox.draw(canvas);
   }
+  return hasFace;
+};
+
+export const handleImageLove = async (url: any) => {
+  const image = await faceapi.fetchImage(url);
+
+  const imageSize = {
+    width: image.width,
+    height: image.height,
+  };
+
+  const detections = await faceapi
+    .detectAllFaces(image)
+    .withFaceLandmarks()
+    .withFaceDescriptors();
+  const resizeDetection = faceapi.resizeResults(detections, imageSize);
+
+  const hasFace = resizeDetection.length > 0;
+
   return hasFace;
 };
 
@@ -81,10 +100,7 @@ export const handleVideo = (ref1: any, ref2: any) => {
       .withFaceLandmarks()
       .withFaceExpressions();
 
-
-    ref2.current.innerHtml = faceapi.createCanvasFromMedia(
-      ref1.current
-    );
+    ref2.current.innerHtml = faceapi.createCanvasFromMedia(ref1.current);
     faceapi.matchDimensions(ref2.current, {
       width: 940,
       height: 650,
@@ -99,4 +115,4 @@ export const handleVideo = (ref1: any, ref2: any) => {
     faceapi.draw.drawFaceLandmarks(ref2.current, resized);
     faceapi.draw.drawFaceExpressions(ref2.current, resized);
   }, 1000);
-}
+};
